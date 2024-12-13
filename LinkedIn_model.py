@@ -311,8 +311,6 @@ marital_status = 1 if marital_status_input == "Yes" else 0
 
  # Gender Selection with Images in Sidebar
 st.sidebar.write("### Select Gender")
-
- # Embed images inside radio buttons
 gender_options = {
     "Male": Image.open("male.png"),  # Ensure these files are in your project folder
     "Female": Image.open("female.png")
@@ -325,28 +323,31 @@ gender = st.sidebar.radio(
 gender_value = 0 if gender == "Male" else 1
 
 # Display the selected image next to the radio button
-st.sidebar.image(gender_options[gender], caption=gender, use_column_width=True)
+st.sidebar.image(gender_options[gender], caption=gender, use_container_width=True)
+
+# Display Instruction Message Before Results
+st.info("Press the Submit button to see the prediction results.")
 
 # Prediction logic triggered only on button click
 if st.sidebar.button("Submit"):
-    # Prepare input for prediction
+# Prepare input for prediction
     input_data = [[income, education, parent, marital_status, gender_value, age]]
 
     # Predict using the model
     prediction_probability = model.predict_proba(input_data)[0][1]
     prediction = "LinkedIn User" if prediction_probability >= 0.5 else "Not a LinkedIn User"
 
-     # Display Results
+    # Display Results
     st.write("### Prediction Results")
         
-     # Display the prediction as text
+    # Display the prediction as text
     if prediction == "LinkedIn User":
         st.success(f"🎉 You are predicted to be a LinkedIn user!")
     else:
         st.error(f"❌ You are predicted NOT to be a LinkedIn user.")
         
     # Probability Strength Bar
-    st.write("### Probability Strength")
+    st.write("## Probability Strength")
     st.progress(int(prediction_probability * 100))  # Converts probability to percentage and displays as a progress bar
         
     # Display the exact probability as a metric
