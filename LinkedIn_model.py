@@ -22,6 +22,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 
+# Streamlit App Title and Description
+st.title("LinkedIn User Prediction App")
+st.write("This app predicts whether an individual is a LinkedIn user based on demographic and behavioral factors.")
 
 # #### Q1: Read in the data, call the dataframe "s"  and check the dimensions of the dataframe
 
@@ -38,8 +41,15 @@ file_path = os.path.join(script_dir, "social_media_usage.csv")
 
 # In[6]:
 
-
-s = pd.read_csv(file_path)
+# **Data Loading**
+try:
+    s = pd.read_csv(file_path)
+    st.write("### Dataset Preview:")
+    st.dataframe(s.head())  # Display the first few rows of the dataset
+except FileNotFoundError:
+    st.error("The dataset file 'social_media_usage.csv' is missing. Please upload it or ensure it exists in the app's directory.")
+    st.stop()
+    
 print(s.shape)  #Checking dataset dimensions
 
 
