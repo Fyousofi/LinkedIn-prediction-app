@@ -304,29 +304,23 @@ age = st.sidebar.slider("Age:", min_value=18, max_value=98, value=30)
  # Gender Selection with Images in Sidebar
 st.sidebar.write("### Select Gender")
 
-# Load images
-male_image = Image.open("male.png")  # Ensure this file is in your project folder
-female_image = Image.open("female.png")  # Ensure this file is in your project folder
-
-# Gender selection radio button
+ # Embed images inside radio buttons
+gender_options = {
+    "Male": Image.open("male.png"),  # Ensure these files are in your project folder
+    "Female": Image.open("female.png")
+    }
 gender = st.sidebar.radio(
-    "Choose gender:",
-    options=["Male", "Female"]
-)
+    "Choose Gender:",
+    options=list(gender_options.keys()),
+    format_func=lambda x: f"{x}"  # Customize display text for each option if needed
+    )
+gender_value = 0 if gender == "Male" else 1
 
-# Display the selected image
-if gender == "Male":
-    st.image(male_image, caption="Male", use_column_width=True)
-    gender_value = 0
-else:
-    st.image(female_image, caption="Female", use_column_width=True)
-    gender_value = 1
-
-
-
+# Display the selected image next to the radio button
+st.sidebar.image(gender_options[gender], caption=gender, use_column_width=True)
 
 # Prepare input for prediction
-input_data = [[income, education, parent, marital_status, gender, age]]
+input_data = [[income, education, parent, marital_status, gender_value, age]]
 
 # Predict using the model
 prediction_probability = model.predict_proba(input_data)[0][1]
