@@ -9,7 +9,7 @@
 
 # In[3]:
 
-import streamlit as st
+
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -21,10 +21,6 @@ from sklearn.model_selection import train_test_split #used for splitting the dat
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-
-# Streamlit App Title and Description
-st.title("LinkedIn User Prediction App")
-st.write("This app predicts whether an individual is a LinkedIn user based on demographic and behavioral factors.")
 
 # #### Q1: Read in the data, call the dataframe "s"  and check the dimensions of the dataframe
 
@@ -288,14 +284,46 @@ print(f"The probability of LinkedIn usage decreases by {abs(probability_change):
 
 
 # ***Part 2: Deploying the model on Streamlit***
+
+import streamlit as st
+from PIL import Image
+
+# Streamlit App Title and Description
+st.title("LinkedIn User Prediction App")
+st.write("This app predicts whether an individual is a LinkedIn user based on demographic and behavioral factors.")
+
 #  #### Interactive inputs for the App
 st.sidebar.header("Input Features")
 income = st.sidebar.slider("Income (1 = Low, 9 = High):", min_value=1, max_value=9, value=5)
 education = st.sidebar.slider("Education Level (1 = Low, 8 = High):", min_value=1, max_value=8, value=4)
 parent = st.sidebar.selectbox("Parent Status:", options={0: "Not a Parent", 1: "Parent"})
 marital_status = st.sidebar.selectbox("Marital Status:", options={0: "Not Married", 1: "Married"})
-gender = st.sidebar.selectbox("Gender:", options={0: "Male", 1: "Female"})
 age = st.sidebar.slider("Age:", min_value=18, max_value=98, value=30)
+#gender = st.sidebar.selectbox("Gender:", options={0: "Male", 1: "Female"})
+
+# Gender selection with images
+st.write("### Select Gender")
+
+# Load images
+male_image = Image.open("male.png")  # Ensure this file is in your project folder
+female_image = Image.open("female.png")  # Ensure this file is in your project folder
+
+# Gender selection radio button
+gender = st.radio(
+    "Choose gender:",
+    options=["Male", "Female"]
+)
+
+# Display the selected image
+if gender == "Male":
+    st.image(male_image, caption="Male", use_column_width=True)
+    gender_value = 0
+else:
+    st.image(female_image, caption="Female", use_column_width=True)
+    gender_value = 1
+
+
+
 
 # Prepare input for prediction
 input_data = [[income, education, parent, marital_status, gender, age]]
@@ -306,5 +334,7 @@ prediction = "LinkedIn User" if prediction_probability >= 0.5 else "Not a Linked
 
 # Display Results
 st.write("### Prediction Results")
-st.write(f"Based on the inputs, the model predicts: **{prediction}**")
-st.write(f"Probability of being a LinkedIn user: **{prediction_probability:.2%}**")
+if prediction == "LinkedIn User":
+    st.success(f"🎉 You are predicted to be a LinkedIn user with a probability of {prediction_probability:.2%}.")
+else:
+    st.error(f"❌ You are predicted NOT to be a LinkedIn user with a probability of {prediction_probability:.2%}.")
