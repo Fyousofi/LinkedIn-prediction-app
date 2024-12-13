@@ -325,11 +325,17 @@ gender_value = 0 if gender == "Male" else 1
 # Display the selected image next to the radio button
 st.sidebar.image(gender_options[gender], caption=gender, use_container_width=True)
 
-# Display Instruction Message Before Results
-st.info("Press the Submit button to see the prediction results.")
+ # Instruction Message in Smaller Font
+st.markdown("### Submit Your Inputs")
+st.markdown(
+    "<p style='font-size:14px;'>Press the <strong>Submit</strong> button to see the prediction results.</p>",
+        unsafe_allow_html=True,
+)
 
-# Prediction logic triggered only on button click
-if st.sidebar.button("Submit"):
+# Submit Button on Main Screen
+submit = st.button("Submit")
+
+if submit:
 # Prepare input for prediction
     input_data = [[income, education, parent, marital_status, gender_value, age]]
 
@@ -347,7 +353,7 @@ if st.sidebar.button("Submit"):
         st.error(f"❌ You are predicted NOT to be a LinkedIn user.")
         
     # Probability Strength Bar
-    st.write("## Probability Strength")
+    st.write("#### Probability Strength")
     st.progress(int(prediction_probability * 100))  # Converts probability to percentage and displays as a progress bar
         
     # Display the exact probability as a metric
