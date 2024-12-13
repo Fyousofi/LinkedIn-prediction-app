@@ -28,7 +28,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 # In[1]:
 
 
-file_path = r"C:\Users\mo\Desktop\fatima\LindedIn_PredictionApp\social_media_usage.csv"
+file_path = r"social_media_usage.csv"
 
 
 # In[6]:
