@@ -17,8 +17,6 @@ import matplotlib.pyplot as plt
 import altair as alt
 import os
 import numpy as np
-get_ipython().system('pip install plotnine')
-from plotnine import *
 from sklearn.model_selection import train_test_split #used for splitting the dataset for modeling
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
