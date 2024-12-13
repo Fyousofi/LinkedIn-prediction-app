@@ -301,15 +301,15 @@ marital_status = st.sidebar.selectbox("Marital Status:", options={0: "Not Marrie
 age = st.sidebar.slider("Age:", min_value=18, max_value=98, value=30)
 #gender = st.sidebar.selectbox("Gender:", options={0: "Male", 1: "Female"})
 
-# Gender selection with images
-st.write("### Select Gender")
+ # Gender Selection with Images in Sidebar
+st.sidebar.write("### Select Gender")
 
 # Load images
 male_image = Image.open("male.png")  # Ensure this file is in your project folder
 female_image = Image.open("female.png")  # Ensure this file is in your project folder
 
 # Gender selection radio button
-gender = st.radio(
+gender = st.sidebar.radio(
     "Choose gender:",
     options=["Male", "Female"]
 )
