@@ -9,7 +9,7 @@
 
 # In[3]:
 
-
+import streamlit as st
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -20,6 +20,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split #used for splitting the dataset for modeling
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
 
 
 # #### Q1: Read in the data, call the dataframe "s"  and check the dimensions of the dataframe
