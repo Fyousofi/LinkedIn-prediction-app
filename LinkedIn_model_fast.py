@@ -23,10 +23,41 @@ st.success("Model loaded successfully!")  # Optional message to confirm loading
 #  #### Interactive inputs for the App
 st.sidebar.header("Input Features")
 
-income = st.sidebar.slider("Income (1 = Low, 9 = High):", min_value=1, max_value=9, value=5)
-education = st.sidebar.slider("Education Level (1 = Low, 8 = High):", min_value=1, max_value=8, value=4)
-#parent = st.sidebar.selectbox("Parent Status: (Do you Kids)", options={0: "Not a Parent", 1: "Parent"})
-#marital_status = st.sidebar.selectbox("Marital Status:", options={0: "Not Married", 1: "Married"})
+# Income Dropdown
+income_options = {
+    1: "Less than $10,000",
+    2: "$10,000 to under $20,000",
+    3: "$20,000 to under $30,000",
+    4: "$30,000 to under $40,000",
+    5: "$40,000 to under $50,000",
+    6: "$50,000 to under $75,000",
+    7: "$75,000 to under $100,000",
+    8: "$100,000 to under $150,000",
+    9: "$150,000 or more",
+}
+income = st.sidebar.selectbox(
+    "Household Income:",
+    options=list(income_options.keys()),
+    format_func=lambda x: income_options[x]
+)
+
+
+# Education Dropdown
+education_options = {
+    1: "Less than high school",
+    2: "High school incomplete",
+    3: "High school graduate",
+    4: "Some college, no degree",
+    5: "Two-year associate degree",
+    6: "Four-year college degree",
+    7: "Some postgraduate schooling",
+    8: "Postgraduate or professional degree"
+}
+education = st.sidebar.selectbox(
+    "Education Level:",
+    options=list(education_options.keys()),
+    format_func=lambda x: education_options[x]
+)
 age = st.sidebar.slider("Age:", min_value=18, max_value=98, value=30)
 
 # Parent Status (Yes/No)
