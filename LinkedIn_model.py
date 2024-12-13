@@ -44,8 +44,7 @@ file_path = os.path.join(script_dir, "social_media_usage.csv")
 # **Data Loading**
 try:
     s = pd.read_csv(file_path)
-    st.write("### Dataset Preview:")
-    st.dataframe(s.head())  # Display the first few rows of the dataset
+    
 except FileNotFoundError:
     st.error("The dataset file 'social_media_usage.csv' is missing. Please upload it or ensure it exists in the app's directory.")
     st.stop()
@@ -289,3 +288,23 @@ print(f"The probability of LinkedIn usage decreases by {abs(probability_change):
 
 
 # ***Part 2: Deploying the model on Streamlit***
+#  #### Interactive inputs for the App
+st.sidebar.header("Input Features")
+income = st.sidebar.slider("Income (1 = Low, 9 = High):", min_value=1, max_value=9, value=5)
+education = st.sidebar.slider("Education Level (1 = Low, 8 = High):", min_value=1, max_value=8, value=4)
+parent = st.sidebar.selectbox("Parent Status:", options={0: "Not a Parent", 1: "Parent"})
+marital_status = st.sidebar.selectbox("Marital Status:", options={0: "Not Married", 1: "Married"})
+gender = st.sidebar.selectbox("Gender:", options={0: "Male", 1: "Female"})
+age = st.sidebar.slider("Age:", min_value=18, max_value=98, value=30)
+
+# Prepare input for prediction
+input_data = [[income, education, parent, marital_status, gender, age]]
+
+# Predict using the model
+prediction_probability = model.predict_proba(input_data)[0][1]
+prediction = "LinkedIn User" if prediction_probability >= 0.5 else "Not a LinkedIn User"
+
+# Display Results
+st.write("### Prediction Results")
+st.write(f"Based on the inputs, the model predicts: **{prediction}**")
+st.write(f"Probability of being a LinkedIn user: **{prediction_probability:.2%}**")
