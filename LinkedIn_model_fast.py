@@ -68,7 +68,10 @@ parent = 1 if parent_status == "Yes" else 0
 marital_status_input = st.sidebar.selectbox("Are you married?", options=["No", "Yes"])
 marital_status = 1 if marital_status_input == "Yes" else 0
 
-gender = st.sidebar.selectbox("Gender:", options={0: "Male/Other", 1: "Female"})
+gender_input = st.sidebar.selectbox("Select Gender", options=["Female", "Male / Other"])
+gender = 1 if gender_input == "Female" else 0
+
+#gender = st.sidebar.selectbox("Gender:", options={0: "Male/Other", 1: "Female"})
 
 
  # Instruction Message in Smaller Font
