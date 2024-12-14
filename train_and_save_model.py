@@ -60,18 +60,17 @@ print(Toy_df)
 
 # In[10]:
 
-
 ss = s[['income', 'educ2', 'par', 'marital', 'gender', 'age']].copy()
 ss['sm_li'] = clean_sm(s['web1h'])  # Replace 'LinkedIn' with actual column name from the variable dictionary
 
-#Drop missing values
-ss = ss[(ss['income'] <= 9) & (ss['educ2'] <= 8) & (ss['age'] <= 98)]
+#Drop missing values &  dropping the parental and marital stauts regarded as either dont' know or refusal 
+ss = ss[(ss['income'] <= 9) & (ss['educ2'] <= 8) & (ss['age'] <= 98) & (ss['par'] <= 2) & (ss['marital'] <= 6) & (ss['gender'] <= 3) ]
 ss.dropna(inplace=True)
 
 #Converting Parent, marital and gender to binary variables for further analysis
-ss['par'] = ss['par'].map({1: 0, 2: 1})  # Assuming 1 = non-parent, 2 = parent
-ss['marital'] = ss['marital'].apply(lambda x: 1 if x == 1 else 0)  # Assuming 1 = married, others = not married
-ss['gender'] = ss['gender'].apply(lambda x: 1 if x == 1 else 0)  # Assuming 1 = female, others = male
+ss['par'] = ss['par'].map({1: 1, 2: 0})  # 1 --> parent hence encoded as 1 ; 2 --> not a parent hence encoded as 0 (except dont' know or refusal which are dropped)
+ss['marital'] = ss['marital'].apply(lambda x: 1 if x == 1 else 0)  # Assuming 1 = married, others = not married (except dont' know or refusal which are dropped)
+ss['gender'] = ss['gender'].apply(lambda x: 1 if x == 1 else 0)  # Assuming 1 = female, others = male & other (except dont' know or refusal which are dropped)
 
 print("Summary of the new dataframe `ss`:")
 print(ss.describe()) #come back to this for double checking

@@ -61,29 +61,15 @@ education = st.sidebar.selectbox(
 age = st.sidebar.slider("Age:", min_value=18, max_value=98, value=30)
 
 # Parent Status (Yes/No)
-parent_status = st.sidebar.selectbox("Are you a parent?", options=["No", "Yes"])
+parent_status = st.sidebar.selectbox("Are you a parent of a child under 18 living in your home?", options=["No", "Yes"])
 parent = 1 if parent_status == "Yes" else 0
 
 # Marital Status (Yes/No)
 marital_status_input = st.sidebar.selectbox("Are you married?", options=["No", "Yes"])
 marital_status = 1 if marital_status_input == "Yes" else 0
-#gender = st.sidebar.selectbox("Gender:", options={0: "Male", 1: "Female"})
 
- # Gender Selection with Images in Sidebar
-st.sidebar.write("### Select Gender")
-gender_options = {
-    "Male": Image.open("male.png"),  # Ensure these files are in your project folder
-    "Female": Image.open("female.png")
-    }
-gender = st.sidebar.radio(
-    "Choose Gender:",
-    options=list(gender_options.keys()),
-    format_func=lambda x: f"{x}"  # Customize display text for each option if needed
-    )
-gender_value = 0 if gender == "Male" else 1
+gender = st.sidebar.selectbox("Gender:", options={0: "Male/Other", 1: "Female"})
 
-# Display the selected image next to the radio button
-st.sidebar.image(gender_options[gender], caption=gender, use_container_width=True)
 
  # Instruction Message in Smaller Font
 st.markdown("### Submit Your Inputs")
